@@ -26,16 +26,16 @@ public class Question {
 		super();
 	}
 	
-	public long getQuestionid() {
+	public long getId() {
 		return questionId;
 	}
-	public void setQuestionid(long questionid) {
+	public void setId(long questionid) {
 		this.questionId = questionid;
 	}
-	public String getQuestionname() {
+	public String getQuestionName() {
 		return questionName;
 	}
-	public void setQuestionname(String questionname) {
+	public void setQuestionName(String questionname) {
 		this.questionName = questionname;
 	}
 
