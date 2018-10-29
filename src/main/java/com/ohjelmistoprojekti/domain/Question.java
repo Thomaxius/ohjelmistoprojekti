@@ -1,15 +1,20 @@
 package com.ohjelmistoprojekti.domain;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 public class Question {
 
-	private long questionid;
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private Long questionid;
 	private String questionname;
 	//Category questionCategory
 	//User user (addedby)
 	
-	public Question(long questionid, String questionname) {
+	public Question(String questionname) {
 		super();
-		this.questionid = questionid;
 		this.questionname = questionname;
 	}
 	public Question() {

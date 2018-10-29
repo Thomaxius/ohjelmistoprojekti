@@ -1,5 +1,7 @@
 package com.ohjelmistoprojekti;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,11 +9,13 @@ import org.springframework.context.annotation.Bean;
 
 import com.ohjelmistoprojekti.domain.Question;
 
-@SpringBootApplication
-public class Application {
 
+@SpringBootApplication
+public class QuestionApplication {
+	private static final Logger log = LoggerFactory.getLogger(QuestionApplication.class);
+	
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(QuestionApplication.class, args);
     }
 
     @Bean
