@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import com.ohjelmistoprojekti.domain.Question;
-
+import com.ohjelmistoprojekti.domain.QuestionRepository;
 
 @SpringBootApplication
 public class QuestionApplication {
@@ -19,18 +19,18 @@ public class QuestionApplication {
     }
 
     @Bean
-    public CommandLineRunner bookDemo(QuestionRepository qRepository) {
+    public CommandLineRunner bookDemo(QuestionRepository questionRepository) {
         return (args) -> {
             
             log.info("Save questions");
-            qRepository.save(new Question("Mitä laitetta käytät pääasiassa koulutehtävien tekemiseen?"));
-            qRepository.save(new Question("Minkä merkkinen laite on?"));
-            qRepository.save(new Question("Pystytkö käyttämään koulun vaatimia ohjelmistoja koneella?"));
-            qRepository.save(new Question("Pystytkö käyttämään Peppiä laitteella ongelmitta?"));
-            qRepository.save(new Question("Onko ohjeistus riittävä, jos käyttää muita kuin suositeltuja laitteita?"));
+            questionRepository.save(new Question("Mitä laitetta käytät pääasiassa koulutehtävien tekemiseen?"));
+            questionRepository.save(new Question("Minkä merkkinen laite on?"));
+            questionRepository.save(new Question("Pystytkö käyttämään koulun vaatimia ohjelmistoja koneella?"));
+            questionRepository.save(new Question("Pystytkö käyttämään Peppiä laitteella ongelmitta?"));
+            questionRepository.save(new Question("Onko ohjeistus riittävä, jos käyttää muita kuin suositeltuja laitteita?"));
                     
             log.info("Show questions");
-            for (Question question : qRepository.findAll()) {
+            for (Question question : questionRepository.findAll()) {
                 log.info(question.toString());
             }
 
