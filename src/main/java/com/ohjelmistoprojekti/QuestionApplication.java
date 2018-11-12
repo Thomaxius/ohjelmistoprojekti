@@ -11,7 +11,6 @@ import com.ohjelmistoprojekti.domain.Category;
 import com.ohjelmistoprojekti.domain.CategoryRepository;
 import com.ohjelmistoprojekti.domain.Question;
 import com.ohjelmistoprojekti.domain.QuestionRepository;
-import com.ohjelmistoprojekti.domain.User;
 import com.ohjelmistoprojekti.domain.UserRepository;
 
 
@@ -32,20 +31,20 @@ public class QuestionApplication {
 			//urepository.save(user1);
 			//urepository.save(user2);
 			
-        	categoryRepository.save(new Category("Biographies"));
-			categoryRepository.save(new Category("Fantasy"));
+        	//categoryRepository.save(new Category("Biographies"));
+			//categoryRepository.save(new Category("Fantasy"));
 			
-            log.info("Save questions");
-            //QuestionRepository.save(new Question("Mitä laitetta käytät pääasiassa koulutehtävien tekemiseen?", categoryRepository.findByCategoryName("Fantasy").get(0)));
+			
+            //log.info("Save questions");
+
             //QuestionRepository.save(new Question("Minkä merkkinen laite on?", categoryRepository.findByCategoryName("Fantasy").get(0)));
             //QuestionRepository.save(new Question("Pystytkö käyttämään koulun vaatimia ohjelmistoja koneella?", categoryRepository.findByCategoryName("Fantasy").get(0)));
             //QuestionRepository.save(new Question("Pystytkö käyttämään Peppiä laitteella ongelmitta?", categoryRepository.findByCategoryName("Fantasy").get(0)));
            // QuestionRepository.save(new Question("Onko ohjeistus riittävä, jos käyttää muita kuin suositeltuja laitteita?", categoryRepository.findByCategoryName("Fantasy").get(0)));
-                    
-            log.info("Show questions");
-            for (Question Question : QuestionRepository.findAll()) {
-                log.info(Question.toString());
-            }
+           // log.info("Show questions");
+           // for (Question Question : QuestionRepository.findAll()) {
+            //    log.info(Question.toString());
+            //}
 
         };
     }
