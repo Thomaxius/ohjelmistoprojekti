@@ -23,11 +23,11 @@ public class QuestionApplication {
         return (args) -> {
             
             log.info("Save questions");
-            questionRepository.save(new Question("Mitä laitetta käytät pääasiassa koulutehtävien tekemiseen?"));
-            questionRepository.save(new Question("Minkä merkkinen laite on?"));
-            questionRepository.save(new Question("Pystytkö käyttämään koulun vaatimia ohjelmistoja koneella?"));
-            questionRepository.save(new Question("Pystytkö käyttämään Peppiä laitteella ongelmitta?"));
-            questionRepository.save(new Question("Onko ohjeistus riittävä, jos käyttää muita kuin suositeltuja laitteita?"));
+            //questionRepository.save(new Question("Mitä laitetta käytät pääasiassa koulutehtävien tekemiseen?"));
+            //questionRepository.save(new Question("Minkä merkkinen laite on?"));
+            //questionRepository.save(new Question("Pystytkö käyttämään koulun vaatimia ohjelmistoja koneella?"));
+            //questionRepository.save(new Question("Pystytkö käyttämään Peppiä laitteella ongelmitta?"));
+            //questionRepository.save(new Question("Onko ohjeistus riittävä, jos käyttää muita kuin suositeltuja laitteita?"));
                     
             log.info("Show questions");
             for (Question question : questionRepository.findAll()) {
