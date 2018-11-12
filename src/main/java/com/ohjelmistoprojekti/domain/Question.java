@@ -1,68 +1,43 @@
 package com.ohjelmistoprojekti.domain;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Question {
-	
-	@Id
+
+    @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private Long id;
+    private Long questionId;
 	private String questionName;
 
-    @ManyToOne
-    @JsonIgnore // Ikuisen loopin välttämiseksi
-    @JoinColumn(name = "categoryId")
-    private Category category;
-    
-	public Question() {}
+	//User user (addedby)
+    //Category questionCategory
 	
-	public Question(String questionName, Category category) {
+	public Question(String questionname) {
 		super();
-		this.questionName = questionName;
-		this.category = category;
+		this.questionName = questionname;
 	}
-
-	public Long getId() {
-		return id;
+	
+	public Question() {
+		super();
 	}
-
-	public void setId(Long id) {
-		this.id = id;
+	
+	public long getId() {
+		return questionId;
 	}
-
+	public void setId(long questionid) {
+		this.questionId = questionid;
+	}
 	public String getQuestionName() {
 		return questionName;
 	}
-
-	public void setQuestionName(String questionName) {
-		this.questionName = questionName;
+	public void setQuestionName(String questionname) {
+		this.questionName = questionname;
 	}
 
-	public Category getCategory() {
-		return category;
-	}
-
-	public void setCategory(Category category) {
-		this.category = category;
-	}
-
-	@Override
-	public String toString() {
-		return "Question [id=" + id + ", questionName=" + questionName + ", category=" + category + "]";
-	}
 	
 }
