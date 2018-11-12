@@ -1,10 +1,16 @@
 package com.ohjelmistoprojekti.domain;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -13,12 +19,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Question {
 	
 	@Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
 	private String questionName;
 
-	
-    
     @ManyToOne
     @JsonIgnore // Ikuisen loopin välttämiseksi
     @JoinColumn(name = "categoryId")
