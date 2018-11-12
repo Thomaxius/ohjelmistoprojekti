@@ -37,10 +37,10 @@ public class QuestionApplication {
 			
             //log.info("Save questions");
 
-            //QuestionRepository.save(new Question("Minkä merkkinen laite on?", categoryRepository.findByCategoryName("Fantasy").get(0)));
-            //QuestionRepository.save(new Question("Pystytkö käyttämään koulun vaatimia ohjelmistoja koneella?", categoryRepository.findByCategoryName("Fantasy").get(0)));
-            //QuestionRepository.save(new Question("Pystytkö käyttämään Peppiä laitteella ongelmitta?", categoryRepository.findByCategoryName("Fantasy").get(0)));
-           // QuestionRepository.save(new Question("Onko ohjeistus riittävä, jos käyttää muita kuin suositeltuja laitteita?", categoryRepository.findByCategoryName("Fantasy").get(0)));
+            QuestionRepository.save(new Question("Minkä merkkinen laite on?", categoryRepository.findByCategoryName("Fantasy").get(0)));
+            QuestionRepository.save(new Question("Pystytkö käyttämään koulun vaatimia ohjelmistoja koneella?", categoryRepository.findByCategoryName("Fantasy").get(0)));
+            QuestionRepository.save(new Question("Pystytkö käyttämään Peppiä laitteella ongelmitta?", categoryRepository.findByCategoryName("Fantasy").get(0)));
+            QuestionRepository.save(new Question("Onko ohjeistus riittävä, jos käyttää muita kuin suositeltuja laitteita?", categoryRepository.findByCategoryName("Fantasy").get(0)));
            // log.info("Show questions");
            // for (Question Question : QuestionRepository.findAll()) {
             //    log.info(Question.toString());
