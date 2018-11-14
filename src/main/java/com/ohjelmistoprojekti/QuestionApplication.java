@@ -31,8 +31,9 @@ public class QuestionApplication {
             //questionRepository.save(new Question("Pystytkö käyttämään Peppiä laitteella ongelmitta?", "text"));
             //questionRepository.save(new Question("Onko ohjeistus riittävä, jos käyttää muita kuin suositeltuja laitteita?", "text"));
             
-            answerRepository.save(new Answer("Kannettavaa tietokonetta", questionRepository.findByQuestionName("Mitä laitetta käytät pääasiassa koulutehtävien tekemiseen?").get(0)));
-            
+            //answerRepository.save(new Answer("Kannettavaa tietokonetta", questionRepository.findByQuestionName("Mitä laitetta käytät pääasiassa koulutehtävien tekemiseen?").get(0)));
+            //answerRepository.save(new Answer("Pöytätietokonetta", questionRepository.findByQuestionName("Mitä laitetta käytät pääasiassa koulutehtävien tekemiseen?").get(0)));
+                        
             log.info("Show questions");
             for (Question question : questionRepository.findAll()) {
                 log.info(question.toString());
