@@ -7,6 +7,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import com.ohjelmistoprojekti.domain.Answer;
+import com.ohjelmistoprojekti.domain.AnswerRepository;
 import com.ohjelmistoprojekti.domain.Question;
 import com.ohjelmistoprojekti.domain.QuestionRepository;
 
@@ -19,7 +21,7 @@ public class QuestionApplication {
     }
 
     @Bean
-    public CommandLineRunner bookDemo(QuestionRepository questionRepository) {
+    public CommandLineRunner Demo(QuestionRepository questionRepository, AnswerRepository answerRepository) {
         return (args) -> {
             
             log.info("Save questions");
@@ -28,7 +30,9 @@ public class QuestionApplication {
             //questionRepository.save(new Question("Pystytkö käyttämään koulun vaatimia ohjelmistoja koneella?", "text"));
             //questionRepository.save(new Question("Pystytkö käyttämään Peppiä laitteella ongelmitta?", "text"));
             //questionRepository.save(new Question("Onko ohjeistus riittävä, jos käyttää muita kuin suositeltuja laitteita?", "text"));
-                    
+            
+            answerRepository.save(new Answer("Kannettavaa tietokonetta", questionRepository.findByQuestionName("Mitä laitetta käytät pääasiassa koulutehtävien tekemiseen?").get(0)));
+            
             log.info("Show questions");
             for (Question question : questionRepository.findAll()) {
                 log.info(question.toString());

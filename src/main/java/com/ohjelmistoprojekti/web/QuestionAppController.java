@@ -99,12 +99,17 @@ public class QuestionAppController {
         return "addquestion";
     }     
     
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    @RequestMapping(value = "/savequestion", method = RequestMethod.POST)
     public String save(Question question){
         questionRepository.save(question);
-        return "redirect:questionlist";
+        return "redirect:questions";
     }    
-
+    
+    @RequestMapping(value = "/saveanswer", method = RequestMethod.POST)
+    public String save(Answer answer){
+        answerRepository.save(answer);
+        return "redirect:answers";
+    }
     @RequestMapping(value = "/edit/{id}")
 	public String editquestion(@PathVariable("id") Long id, Model model){
 
