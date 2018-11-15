@@ -16,7 +16,7 @@ public class Question {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long questionId;
 	private String questionName;  
-	private String questionType;
+	private String questionType; //text, radio, checkbox..
 
 
 
@@ -36,9 +36,6 @@ public class Question {
 		super();
 	}
 	
-	public long getId() {
-		return questionId;
-	}
 	public void setId(long questionid) {
 		this.questionId = questionid;
 	}
