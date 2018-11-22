@@ -41,6 +41,7 @@ public class Question {
     //Category questionCategory
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "question")
+	@JsonIgnore
 	private List<Answer> answers;
 	
 	public Question() {
