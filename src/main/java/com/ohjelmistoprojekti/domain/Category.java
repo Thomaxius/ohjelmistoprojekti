@@ -10,14 +10,15 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 
+
 @Entity
 public class Category {
-	
 	@Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long categoryId;
+	
 	private String categoryName;
-
+	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
 	private List<Question> questions;
 	
@@ -56,5 +57,6 @@ public class Category {
 	public String toString() {
 		return "Category [categoryId=" + categoryId + ", categoryName=" + categoryName + "]";
 	}
+	
 	
 }
