@@ -27,18 +27,22 @@ public class QuestionApplication {
         return (args) -> {
             
         	log.info("Save categories");
-            categoryrepository.save(new Category("Yleiset"));
+        	if (categoryrepository.findByCategoryName("Yleiset") == null) {
+        		categoryrepository.save(new Category("Yleiset"));
+        	}
         	
             log.info("Save questions");
+            if (questionRepository.findByQuestionName("Mitä laitetta käytät pääasiassa koulutehtävien tekemiseen?") == null) {
+            	//We assume that if one sample question is not in the database, the rest are not either
             questionRepository.save(new Question("Mitä laitetta käytät pääasiassa koulutehtävien tekemiseen?", "text", categoryrepository.findByCategoryName("Yleiset").get(0)));
-            //questionRepository.save(new Question("Minkä merkkinen laite on?", "text"));
-            //questionRepository.save(new Question("Pystytkö käyttämään koulun vaatimia ohjelmistoja koneella?", "text"));
-            //questionRepository.save(new Question("Pystytkö käyttämään Peppiä laitteella ongelmitta?", "text"));
-            //questionRepository.save(new Question("Onko ohjeistus riittävä, jos käyttää muita kuin suositeltuja laitteita?", "text"));
-            
+            questionRepository.save(new Question("Minkä merkkinen laite on?", "text", categoryrepository.findByCategoryName("Yleiset").get(0)));
+            questionRepository.save(new Question("Pystytkö käyttämään koulun vaatimia ohjelmistoja koneella?", "text", categoryrepository.findByCategoryName("Yleiset").get(0)));
+            questionRepository.save(new Question("Pystytkö käyttämään Peppiä laitteella ongelmitta?", "text", categoryrepository.findByCategoryName("Yleiset").get(0)));
+            questionRepository.save(new Question("Onko ohjeistus riittävä, jos käyttää muita kuin suositeltuja laitteita?", "text", categoryrepository.findByCategoryName("Yleiset").get(0)));
             answerRepository.save(new Answer("Kannettavaa tietokonetta", questionRepository.findByQuestionName("Mitä laitetta käytät pääasiassa koulutehtävien tekemiseen?").get(0)));
-            //answerRepository.save(new Answer("Pöytätietokonetta", questionRepository.findByQuestionName("Mitä laitetta käytät pääasiassa koulutehtävien tekemiseen?").get(0)));
-                        
+            answerRepository.save(new Answer("Pöytätietokonetta", questionRepository.findByQuestionName("Mitä laitetta käytät pääasiassa koulutehtävien tekemiseen?").get(0)));
+            }
+                    
             log.info("Show questions");
             for (Question question : questionRepository.findAll()) {
                 log.info(question.toString());
