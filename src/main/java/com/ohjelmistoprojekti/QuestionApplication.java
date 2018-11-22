@@ -27,12 +27,12 @@ public class QuestionApplication {
         return (args) -> {
             
         	log.info("Save categories");
-        	if (categoryrepository.findByCategoryName("Yleiset") == null) {
+        	if (categoryrepository.findByCategoryName("Yleiset").isEmpty()) {
         		categoryrepository.save(new Category("Yleiset"));
         	}
         	
             log.info("Save questions");
-            if (questionRepository.findByQuestionName("Mitä laitetta käytät pääasiassa koulutehtävien tekemiseen?") == null) {
+            if (questionRepository.findByQuestionName("Mitä laitetta käytät pääasiassa koulutehtävien tekemiseen?").isEmpty()) {
             	//We assume that if one sample question is not in the database, the rest are not either
             questionRepository.save(new Question("Mitä laitetta käytät pääasiassa koulutehtävien tekemiseen?", "text", categoryrepository.findByCategoryName("Yleiset").get(0)));
             questionRepository.save(new Question("Minkä merkkinen laite on?", "text", categoryrepository.findByCategoryName("Yleiset").get(0)));
@@ -42,7 +42,7 @@ public class QuestionApplication {
             answerRepository.save(new Answer("Kannettavaa tietokonetta", questionRepository.findByQuestionName("Mitä laitetta käytät pääasiassa koulutehtävien tekemiseen?").get(0)));
             answerRepository.save(new Answer("Pöytätietokonetta", questionRepository.findByQuestionName("Mitä laitetta käytät pääasiassa koulutehtävien tekemiseen?").get(0)));
             }
-                    
+                               
             log.info("Show questions");
             for (Question question : questionRepository.findAll()) {
                 log.info(question.toString());

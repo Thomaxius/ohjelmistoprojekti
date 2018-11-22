@@ -1,5 +1,10 @@
 package com.ohjelmistoprojekti.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,21 +20,29 @@ public class Answer {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long answerId;
-	private String answerText;
 	
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "questionid")
 	private Question question;
-	
+    
+    @Column
+    @ElementCollection(targetClass=String.class)
+    private List<String> answers = new ArrayList<String>();
+    
     public Answer() {}
 
 	public Answer(String answerText, Question question) {
 		super();
-		this.answerText = answerText;
+		answers.add(answerText);
 		this.question = question;
 	}
 
+	public Answer(List<String> answers, Question question) {
+		super();
+		this.answers = answers;
+		this.question = question;
+	}
     
 	public Long getAnswerId() {
 		return answerId;
@@ -39,18 +52,8 @@ public class Answer {
 		this.answerId = answerId;
 	}
 
-	public String getAnswerText() {
-		return answerText;
-	}
-
-	public void setAnswerText(String answerText) {
-		this.answerText = answerText;
-	}
-
-	public Answer(Long answerId, String answerText) {
-		super();
-		this.answerId = answerId;
-		this.answerText = answerText;
+	public List<String> getAnswers() {
+		return answers;
 	}
 	
 	
