@@ -34,7 +34,7 @@ public class Question {
 
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(name = "categoryid")
+    @JoinColumn(name = "categoryId")
 	private Category category;	
 	
 	//User user (addedby)
