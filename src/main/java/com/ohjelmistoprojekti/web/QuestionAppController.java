@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ohjelmistoprojekti.domain.Answer;
 import com.ohjelmistoprojekti.domain.AnswerRepository;
+import com.ohjelmistoprojekti.domain.CategoryRepository;
 import com.ohjelmistoprojekti.domain.Question;
 import com.ohjelmistoprojekti.domain.QuestionRepository;
 
@@ -25,6 +26,9 @@ public class QuestionAppController {
 
 	@Autowired
 	private AnswerRepository answerRepository;
+	
+	@Autowired
+	private CategoryRepository categoryRepository; 
 
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public String indeksi() {
@@ -76,6 +80,7 @@ public class QuestionAppController {
 	
 	@RequestMapping(value = "/questionlist")
 	public String questionList(Model model) {
+    	model.addAttribute("categories", categoryRepository.findAll());
 		model.addAttribute("questions", questionRepository.findAll());
 		return "questionlist";
 	}
@@ -88,6 +93,7 @@ public class QuestionAppController {
 	
 	@RequestMapping(value = "/editquestion/{id}")
 	public String editquestion(@PathVariable("id") Long questionId, Model model) {
+		model.addAttribute("categories", categoryRepository.findAll());
 		model.addAttribute("question", questionRepository.findById(questionId));
 		return "editquestion";
 	}

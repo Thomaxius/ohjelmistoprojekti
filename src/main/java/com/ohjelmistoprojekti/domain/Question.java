@@ -32,7 +32,15 @@ public class Question {
 		this.category = category;
 	}
 
-    @ManyToOne
+    public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
+	@ManyToOne
     @JsonIgnore
     @JoinColumn(name = "categoryId")
 	private Category category;	

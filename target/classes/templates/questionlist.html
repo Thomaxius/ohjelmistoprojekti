@@ -32,7 +32,7 @@
 			<td th:text="${qstn.questionId}"></td>
 			<td th:text="${qstn.questionName}"></td>
 			<td th:text="${qstn.questionType}"></td>
-			<!--<td th:text="${qstn.category.categoryName}"></td>  -->
+			<td th:text="${qstn.category.categoryName}"></td>  
  			<td><a th:href="@{/editquestion/{id}(id=${qstn.questionId})}">Muokkaa</a></td>    		
  		<td><a th:href="@{/delete/{id}(id=${qstn.questionId})}">Poista</a></td>  		
 		</tr>

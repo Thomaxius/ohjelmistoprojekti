@@ -14,9 +14,9 @@
 			Kysymys: <input type="text" th:field="*{questionName}" />
 			<br>Tyyppi: <input type="text" th:field="*{questionType}" />
 	
-		<!--	<br>Category: <select id="categlist" th:field="*{category}" class="form-control">
+			<br>Category: <select id="categlist" th:field="*{category}" class="form-control">
        			<option th:each="category: ${categories}" th:value="${category.categoryId}" th:text="${category.categoryName}"></option>
-    		</select>-->
+    		</select>
 			<br><input type="submit" value="Save"/>
 		</form>
 		
