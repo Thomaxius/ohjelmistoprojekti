@@ -22,7 +22,6 @@ public class Answer {
     private Long answerId;
 	
     @ManyToOne
-    @JsonIgnore
     @JoinColumn(name = "questionid")
 	private Question question;
     

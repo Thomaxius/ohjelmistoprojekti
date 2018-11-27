@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ohjelmistoprojekti.domain.Answer;
 import com.ohjelmistoprojekti.domain.AnswerRepository;
+import com.ohjelmistoprojekti.domain.Category;
+import com.ohjelmistoprojekti.domain.CategoryRepository;
 import com.ohjelmistoprojekti.domain.Question;
 import com.ohjelmistoprojekti.domain.QuestionRepository;
 
@@ -29,6 +31,9 @@ public class QuestionAppController {
 	@Autowired
 	private AnswerRepository answerRepository; 
 
+	@Autowired
+	private CategoryRepository categoryRepository; 
+	
 
 	@RequestMapping(value="/index", method=RequestMethod.GET)
 	public String indeksi() {
@@ -41,14 +46,20 @@ public class QuestionAppController {
         return "login";
     }
 	
-	// RESTful service to get all questions
-	// @ResponseBody muuttaa JSON:iksi
+
 	@RequestMapping(value="/questions", method = RequestMethod.GET)
 	@CrossOrigin
     public @ResponseBody List<Question> questionListRest() {	
         return (List<Question>) questionRepository.findAll();
     }    
 
+
+	@RequestMapping(value="/categories", method = RequestMethod.GET)
+	@CrossOrigin
+    public @ResponseBody List<Category> categoriesListRest() {	
+        return (List<Category>) categoryRepository.findAll();
+    }   	
+	
 	// RESTful service to find question by id
     @RequestMapping(value="/question/{id}", method = RequestMethod.GET)
     public @ResponseBody Optional<Question> findStudentRest(@PathVariable("id") Long id) {	
@@ -63,8 +74,7 @@ public class QuestionAppController {
     }
 
 	
-	// RESTful service to get all questions
-	// @ResponseBody muuttaa JSON:iksi
+
 	@RequestMapping(value="/answers", method = RequestMethod.GET)
 	@CrossOrigin
     public @ResponseBody List<Answer> answerListRest() {	
@@ -101,6 +111,7 @@ public class QuestionAppController {
     
     @RequestMapping(value = "/savequestion", method = RequestMethod.POST)
     public String save(Question question){
+    	System.out.println(question);
         questionRepository.save(question);
         return "redirect:questions";
     }    

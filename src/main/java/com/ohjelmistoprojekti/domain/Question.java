@@ -23,8 +23,6 @@ public class Question {
 	private String questionName;  
 	private String questionType; //text, radio, checkbox..
 
-
-
 	public Question(String questionName, String questionType, Category category) {
 		super();
 		this.questionName = questionName;
@@ -33,7 +31,6 @@ public class Question {
 	}
 
     @ManyToOne
-    @JsonIgnore
     @JoinColumn(name = "categoryid")
 	private Category category;	
 	
@@ -41,7 +38,6 @@ public class Question {
     //Category questionCategory
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "question")
-	@JsonIgnore
 	private List<Answer> answers;
 	
 	public Question() {
@@ -57,7 +53,8 @@ public class Question {
 	public void setQuestionName(String questionname) {
 		this.questionName = questionname;
 	}
-
+	
+	@JsonIgnore
 	public List<Answer> getAnswers() {
 		return answers;
 	}
