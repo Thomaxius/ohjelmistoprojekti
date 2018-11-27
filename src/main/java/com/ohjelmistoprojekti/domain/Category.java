@@ -9,11 +9,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFilter;
 
 
 
 @Entity
+@JsonFilter("categoryFilter")
+
 public class Category {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,6 +25,7 @@ public class Category {
 	private String categoryName;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
+	@JsonBackReference // Blokkaa äärettömän loopin, jonka onetomany aiheuttaa
 	private List<Question> questions;
 	
 	public Category() {}
@@ -47,7 +51,6 @@ public class Category {
 		this.categoryName = categoryName;
 	}
 
-	@JsonIgnore
 	public List<Question> getQuestions() {
 		return questions;
 	}
