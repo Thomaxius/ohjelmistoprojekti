@@ -10,7 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 
 
 
@@ -23,7 +24,7 @@ public class Category {
 	private String categoryName;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
-	@JsonBackReference
+	@JsonManagedReference
 	private List<Question> questions;
 	
 	public Category() {}

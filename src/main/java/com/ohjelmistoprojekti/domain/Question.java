@@ -12,7 +12,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
@@ -24,21 +23,40 @@ public class Question {
     private Long questionId;
 	private String questionName;  
 	private String questionType; //text, radio, checkbox..
+	private String[] values;
+
+	public Question(String questionName, String questionType, Category category, String[] values) {
+		super();
+		this.questionName = questionName;
+		this.questionType = questionType;
+		this.category = category;
+		this.setValues(values);
+	}
 
 	public Question(String questionName, String questionType, Category category) {
 		super();
 		this.questionName = questionName;
 		this.questionType = questionType;
 		this.category = category;
-	}
-
+	}	
+	
     @ManyToOne
     @JoinColumn(name = "categoryid")
-    @JsonManagedReference
+    
+    @JsonBackReference
 	private Category category;	
 
+    public List<Answer> getAnswers() {
+		return answers;
+	}
+
+	public void setAnswers(List<Answer> answers) {
+		this.answers = answers;
+	}
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "question")
-	private List<Answer> answers;
+    @JsonManagedReference
+	private List<Answer> answers;	
 	
 	public Question() {
 		super();
@@ -62,9 +80,6 @@ public class Question {
 		this.category = category;
 	}
 
-	public List<Answer> getAnswers() {
-		return answers;
-	}
 
 	public Long getQuestionId() {
 		return questionId;
@@ -82,8 +97,14 @@ public class Question {
 		this.questionType = questionType;
 	}
 
-	public void setAnswers(List<Answer> answers) {
-		this.answers = answers;
+	public String[] getValues() {
+		return values;
 	}
+
+	public void setValues(String[] values) {
+		this.values = values;
+	}
+
+
 
 }
