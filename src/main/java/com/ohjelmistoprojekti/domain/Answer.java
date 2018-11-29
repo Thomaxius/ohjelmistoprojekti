@@ -8,6 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 
@@ -16,8 +17,12 @@ public class Answer {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long answerId;
+    
+    @JsonIgnore
+    private Long questionId;
 	
-    public Question getQuestion() {
+
+	public Question getQuestion() {
 		return question;
 	}
 
@@ -29,12 +34,20 @@ public class Answer {
 		return answer;
 	}
 
+	public Long getQuestionId() {
+		return questionId;
+	}
+
+	public void setQuestionId(Long questionId) {
+		this.questionId = questionId;
+	}
+
 	public void setAnswer(String answer) {
 		this.answer = answer;
 	}
 
 	@ManyToOne
-    @JoinColumn(name = "questionid")
+    @JoinColumn(name = "question")
 	@JsonBackReference
 	private Question question;
     
@@ -48,6 +61,12 @@ public class Answer {
 		this.question = question;
 	}
 
+	public Answer(String answer, Long questionId) {
+		super();
+		this.answer = answer;
+		this.questionId = questionId;
+	}	
+	
 	public Long getAnswerId() {
 		return answerId;
 	}

@@ -10,9 +10,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.ohjelmistoprojekti.domain.Answer;
 import com.ohjelmistoprojekti.domain.AnswerRepository;
@@ -22,7 +24,8 @@ import com.ohjelmistoprojekti.domain.Question;
 import com.ohjelmistoprojekti.domain.QuestionRepository;
 
 
-@Controller 
+@Controller
+@RestController
 public class QuestionAppController {
  
 	@Autowired
@@ -73,8 +76,13 @@ public class QuestionAppController {
         return "questionlist";
     }
 
+	@RequestMapping(value="/api/answers", method = { RequestMethod.POST })
+    public String answerSavePost(@RequestBody Answer answer) {
+		answer.setQuestion(questionRepository.findById(answer.getQuestionId()).get());
+		answerRepository.save(answer);
+        return "redirect:/api/answers";
+    }  	
 	
-
 	@RequestMapping(value="/answers", method = RequestMethod.GET)
 	@CrossOrigin
     public @ResponseBody List<Answer> answerListRest() {	

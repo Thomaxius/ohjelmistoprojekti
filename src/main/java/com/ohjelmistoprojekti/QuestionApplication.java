@@ -62,7 +62,7 @@ public class QuestionApplication {
             questionRepository.save(new Question("Jos vastasit yllä olevaan kysymykseen, mitä ominaisuutta nämä ongelmat yleensä koskevat?", "text", categoryrepository.findByCategoryName("kategoria4").get(0), new String[] {"Responsiivisuutta", "Tiedon katoamista", "Linkkien supistamista/kadottamista", "Asemointia", "Jotain muuta"}));           
             questionRepository.save(new Question("Kerro lyhyesti oma mielipiteesi mitä parannettavaa koulun työvälineiden ja ohjelmien tarjonnassa olisi?", "text", categoryrepository.findByCategoryName("kategoria4").get(0)));
             
-            answerRepository.save(new Answer("kek", questionRepository.findByQuestionName("Mitä laitetta käytät pääasiassa koulutehtävien tekemiseen?").get(0)));
+            //answerRepository.save(new Answer("kek", questionRepository.findByQuestionName("Mitä laitetta käytät pääasiassa koulutehtävien tekemiseen?").get(0)));
             }
                                
             log.info("Show questions");
