@@ -11,6 +11,7 @@ import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 
@@ -25,7 +26,7 @@ public class Category {
 	private String categoryName;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
-	@JsonBackReference // Blokkaa äärettömän loopin, jonka onetomany aiheuttaa
+	@JsonManagedReference // Blokkaa äärettömän loopin, jonka onetomany aiheuttaa
 	private List<Question> questions;
 	
 	public Category() {}

@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
@@ -38,7 +42,9 @@ public class QuestionAppController {
 	@Autowired
 	private CategoryRepository categoryRepository; 
 	
-
+	FilterProvider filters = new SimpleFilterProvider()
+			.setFailOnUnknownId(false);
+	
 	@RequestMapping(value="/index", method=RequestMethod.GET)
 	public String indeksi() {
 		return "index";  
@@ -50,10 +56,20 @@ public class QuestionAppController {
         return "login";
     }
 	
+    @Bean
+    public ObjectMapper objectMapper() {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        mapper.configure(MapperFeature.DEFAULT_VIEW_INCLUSION, true);
+
+        return mapper;
+    }
 
 	@RequestMapping(value="/questions", method = RequestMethod.GET)
 	@CrossOrigin
-    public @ResponseBody String questionListRest() throws JsonProcessingException {	
+	@RestResource
+    public @ResponseBody String questionListRest() throws JsonProcessingException {
+		System.out.println("lolololo");
 	    ObjectMapper mapper = new ObjectMapper();
 	    SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
 	    .serializeAllExcept("answers", "category");
@@ -102,7 +118,8 @@ public class QuestionAppController {
 	
 	// RESTful service to find question by id
     @RequestMapping(value="/question/{id}", method = RequestMethod.GET)
-    public @ResponseBody Optional<Question> findStudentRest(@PathVariable("id") Long id) {	
+    public @ResponseBody Optional<Question> findStudentRest(@PathVariable("id") Long id) {
+    	System.out.println("kek");
     	return questionRepository.findById(id);
     }      
 	
@@ -148,6 +165,7 @@ public class QuestionAppController {
 
         return "addquestion";
     }     
+      
     
     @RequestMapping(value = "/savequestion", method = RequestMethod.POST)
     public String save(Question question){
@@ -160,6 +178,7 @@ public class QuestionAppController {
         answerRepository.save(answer);
         return "redirect:answers";
     }
+    
     @RequestMapping(value = "/edit/{id}")
 	public String editquestion(@PathVariable("id") Long id, Model model){
 
