@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Muokkaa kysymystä</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" />
+</head>
+<body>
+	<h1>Muokkaa kysymystä:</h1>
+	<div>
+
+		<form th:object="${question}" th:action="@{../savequestion}" action="#" method="post">
+			<input type="hidden" th:field="*{questionId}" class="form-control"/>
+			Kysymys: <input type="text" th:field="*{questionName}" />
+			<br>Tyyppi: <input type="text" th:field="*{questionType}" />
+	
+			<br>Category: <select id="categlist" th:field="*{category}" class="form-control">
+       			<option th:each="category: ${categories}" th:value="${category.categoryId}" th:text="${category.categoryName}"></option>
+    		</select>
+			<br><input type="submit" value="Save"/>
+		</form>
+		
+	</div>
+
+	
+</body>
+</html>
