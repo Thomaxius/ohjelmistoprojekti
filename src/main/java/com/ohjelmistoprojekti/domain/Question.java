@@ -12,12 +12,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 @Entity
-@JsonFilter("questionsFilter")
 public class Question {
 
     @Id
@@ -35,14 +34,10 @@ public class Question {
 
     @ManyToOne
     @JoinColumn(name = "categoryid")
-    @JsonBackReference
+    @JsonManagedReference
 	private Category category;	
-	
-	//User user (addedby)
-    //Category questionCategory
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "question")
-	 // Blokkaa äärettömän loopin, jonka onetomany aiheuttaa
 	private List<Answer> answers;
 	
 	public Question() {
@@ -58,11 +53,6 @@ public class Question {
 	public void setQuestionName(String questionname) {
 		this.questionName = questionname;
 	}
-
-	public List<Answer> getAnswers() {
-		return answers;
-	}
-
 	
 	public Category getCategory() {
 		return category;
@@ -70,6 +60,10 @@ public class Question {
 
 	public void setCategory(Category category) {
 		this.category = category;
+	}
+
+	public List<Answer> getAnswers() {
+		return answers;
 	}
 
 	public Long getQuestionId() {

@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,15 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.MapperFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ser.FilterProvider;
-import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
-import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.ohjelmistoprojekti.domain.Answer;
 import com.ohjelmistoprojekti.domain.AnswerRepository;
+import com.ohjelmistoprojekti.domain.Category;
 import com.ohjelmistoprojekti.domain.CategoryRepository;
 import com.ohjelmistoprojekti.domain.Question;
 import com.ohjelmistoprojekti.domain.QuestionRepository;
@@ -42,9 +34,7 @@ public class QuestionAppController {
 	@Autowired
 	private CategoryRepository categoryRepository; 
 	
-	FilterProvider filters = new SimpleFilterProvider()
-			.setFailOnUnknownId(false);
-	
+
 	@RequestMapping(value="/index", method=RequestMethod.GET)
 	public String indeksi() {
 		return "index";  
@@ -56,70 +46,23 @@ public class QuestionAppController {
         return "login";
     }
 	
-    @Bean
-    public ObjectMapper objectMapper() {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        mapper.configure(MapperFeature.DEFAULT_VIEW_INCLUSION, true);
-
-        return mapper;
-    }
 
 	@RequestMapping(value="/questions", method = RequestMethod.GET)
 	@CrossOrigin
-	@RestResource
-    public @ResponseBody String questionListRest() throws JsonProcessingException {
-		System.out.println("lolololo");
-	    ObjectMapper mapper = new ObjectMapper();
-	    SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-	    .serializeAllExcept("answers", "category");
-	    FilterProvider filters = new SimpleFilterProvider()
-	    .addFilter("questionsFilter", theFilter);
-	    String dtoAsString = mapper.writer(filters).writeValueAsString(questionRepository.findAll());
-	    return dtoAsString;
+    public @ResponseBody List<Question> questionListRest() {	
+        return (List<Question>) questionRepository.findAll();
     }    
 
 
 	@RequestMapping(value="/categories", method = RequestMethod.GET)
 	@CrossOrigin
-    public @ResponseBody String categoriesListRest() throws JsonProcessingException {
-	    ObjectMapper mapper = new ObjectMapper();
-	    SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-	    		
-	    .serializeAllExcept("questions");
-		FilterProvider filters = new SimpleFilterProvider()
-				.setFailOnUnknownId(false) // Muuten räjähtää, koska entity viittaa toiseen entitytyn jolla on filtteri..
-	    .addFilter("categoryFilter", theFilter);
-	    String dtoAsString = mapper.writer(filters).writeValueAsString(categoryRepository.findAll());
-	    return dtoAsString;
+    public @ResponseBody List<Category> categoriesListRest() {	
+        return (List<Category>) categoryRepository.findAll();
     }   	
-
-	@RequestMapping(value="/questionsfull", method = RequestMethod.GET)
-	@CrossOrigin
-    public @ResponseBody String fullQuestionsRest() throws JsonProcessingException {
-	    ObjectMapper mapper = new ObjectMapper();
-	    SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter.serializeAll();
-		FilterProvider filters = new SimpleFilterProvider()
-				.setFailOnUnknownId(false); // Muuten räjähtää, koska entity viittaa toiseen entitytyn jolla on filtteri..
-	    String dtoAsString = mapper.writer(filters).writeValueAsString(questionRepository.findAll());
-	    return dtoAsString;
-    }   	
-
-	@RequestMapping(value="/categoriesfull", method = RequestMethod.GET)
-	@CrossOrigin
-    public @ResponseBody String fullCategoriesRest() throws JsonProcessingException {
-	    ObjectMapper mapper = new ObjectMapper();
-	    SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter.serializeAll();
-		FilterProvider filters = new SimpleFilterProvider()
-				.setFailOnUnknownId(false); // Muuten räjähtää, koska entity viittaa toiseen entitytyn jolla on filtteri..
-	    String dtoAsString = mapper.writer(filters).writeValueAsString(categoryRepository.findAll());
-	    return dtoAsString;
-    }   
 	
 	// RESTful service to find question by id
     @RequestMapping(value="/question/{id}", method = RequestMethod.GET)
-    public @ResponseBody Optional<Question> findStudentRest(@PathVariable("id") Long id) {
-    	System.out.println("kek");
+    public @ResponseBody Optional<Question> findStudentRest(@PathVariable("id") Long id) {	
     	return questionRepository.findById(id);
     }      
 	
@@ -165,10 +108,11 @@ public class QuestionAppController {
 
         return "addquestion";
     }     
-      
     
     @RequestMapping(value = "/savequestion", method = RequestMethod.POST)
     public String save(Question question){
+    	System.out.println(question);
+    	System.out.println("here");
         questionRepository.save(question);
         return "redirect:questions";
     }    
@@ -178,7 +122,6 @@ public class QuestionAppController {
         answerRepository.save(answer);
         return "redirect:answers";
     }
-    
     @RequestMapping(value = "/edit/{id}")
 	public String editquestion(@PathVariable("id") Long id, Model model){
 
