@@ -38,25 +38,6 @@ public class QuestionAppController {
 
 	@Autowired
 	private CategoryRepository categoryRepository; 
-	
-
-	@RequestMapping(value="/index", method=RequestMethod.GET)
-	public String indeksi() {
-		return "index";  
-	}
-	
-	// Login
-	@RequestMapping(value="/login")
-    public String login() {	
-        return "login";
-    }
-	
-
-	@RequestMapping(path = "/questions")
-    public @ResponseBody List<Question> questionListRest() {	
-        return (List<Question>) questionRepository.findAll();
-    }    
-
 
 	@RequestMapping(value="/categories", method = RequestMethod.GET)
 	@CrossOrigin
@@ -64,25 +45,17 @@ public class QuestionAppController {
         return (List<Category>) categoryRepository.findAll();
     }   	
 	
+	@RequestMapping(path = "/questions")
+    public @ResponseBody List<Question> questionListRest() {	
+        return (List<Question>) questionRepository.findAll();
+    }    
+	
 	// RESTful service to find question by id
     @RequestMapping(value="/question/{id}", method = RequestMethod.GET)
     public @ResponseBody Optional<Question> findStudentRest(@PathVariable("id") Long id) {	
     	return questionRepository.findById(id);
     }      
-	
-	// http://localhost8080/questionlist
-    @RequestMapping(value="/questionlist")
-    public String questionList(Model model) {	
-		model.addAttribute("questions", questionRepository.findAll());
-        return "questionlist";
-    }
 
-	@RequestMapping(value="/saveanswer", method = { RequestMethod.POST })
-    public String answerSavePost(@RequestBody Answer answer) {
-		answer.setQuestion(questionRepository.findById(answer.getQuestionId()).get());
-		answerRepository.save(answer);
-        return "POST succesful. Maybe.";
-    }  	
 	
 	@RequestMapping(value="/answers", method = RequestMethod.GET)
 	@CrossOrigin
@@ -90,46 +63,34 @@ public class QuestionAppController {
         return (List<Answer>) answerRepository.findAll();
     }    
 
-	// RESTful service to find question by id
+	// RESTful service to find answer by id
     @RequestMapping(value="/answer/{id}", method = RequestMethod.GET)
     public @ResponseBody Optional<Answer> findAnswerRest(@PathVariable("id") Long id) {	
     	return answerRepository.findById(id);
     }      
-	
-	// http://localhost8080/questionlist
-    @RequestMapping(value="/answerlist")
-    public String answerList(Model model) {	
-		model.addAttribute("answers", answerRepository.findAll());
-        return "answerlist";
-    }    
-    
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String deletequestion(@PathVariable("id") Long questionId, Model model) {
     	questionRepository.deleteById(questionId);
         return "redirect:../questionlist";
-    }   
+    }    
     
-    // http://localhost8080/addquestion
-    @RequestMapping(value = "/add")
-    public String addquestion(Model model){
-
-    	model.addAttribute("question", new Question());
-
-        return "addquestion";
-    }     
+	@RequestMapping(value="/saveanswer", method = { RequestMethod.POST })
+    public String answerSavePost(@RequestBody Answer answer) {
+		answer.setQuestion(questionRepository.findById(answer.getQuestionId()).get());
+		answerRepository.save(answer);
+        return "answer POST succesful. Maybe.";
+    }  	    
     
     @RequestMapping(value = "/savequestion", method = RequestMethod.POST)
     public String save(Question question){
-    	System.out.println(question);
-    	System.out.println("here");
         questionRepository.save(question);
-        return "redirect:questions";
+        return "Question POST succesful. Maybe.";
+    }    
+    
+    @RequestMapping(value = "/savecategory", method = RequestMethod.POST)
+    public String saveCategory(Category category){
+        categoryRepository.save(category);
+        return "Category POST succesful. Maybe.";
     }    
 
-    @RequestMapping(value = "/edit/{id}")
-	public String editquestion(@PathVariable("id") Long id, Model model){
-
-	model.addAttribute("question", questionRepository.findById(id));
-	return "editquestion";
-	}
 } 
