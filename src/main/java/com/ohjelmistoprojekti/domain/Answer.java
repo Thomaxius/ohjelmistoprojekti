@@ -18,7 +18,6 @@ public class Answer {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long answerId;
     
-    @JsonIgnore
     private Long questionId;
 	
 

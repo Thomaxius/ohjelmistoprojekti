@@ -76,11 +76,11 @@ public class QuestionAppController {
         return "questionlist";
     }
 
-	@RequestMapping(value="/api/answers", method = { RequestMethod.POST })
+	@RequestMapping(value="/saveanswer", method = { RequestMethod.POST })
     public String answerSavePost(@RequestBody Answer answer) {
 		answer.setQuestion(questionRepository.findById(answer.getQuestionId()).get());
 		answerRepository.save(answer);
-        return "redirect:/api/answers";
+        return "POST succesful. Maybe.";
     }  	
 	
 	@RequestMapping(value="/answers", method = RequestMethod.GET)
@@ -124,12 +124,7 @@ public class QuestionAppController {
         questionRepository.save(question);
         return "redirect:questions";
     }    
-    
-    @RequestMapping(value = "/saveanswer", method = RequestMethod.POST)
-    public String save(Answer answer){
-        answerRepository.save(answer);
-        return "redirect:answers";
-    }
+
     @RequestMapping(value = "/edit/{id}")
 	public String editquestion(@PathVariable("id") Long id, Model model){
 
