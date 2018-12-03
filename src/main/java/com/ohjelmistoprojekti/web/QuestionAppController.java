@@ -94,13 +94,23 @@ public class QuestionAppController {
         return "redirect:../questionlist";
     }    
     
-	@RequestMapping(value="/saveanswer", method = { RequestMethod.POST })
+	@RequestMapping(value="/savesingleanswer", method = { RequestMethod.POST })
     public String answerSavePost(@RequestBody Answer answer) {
 		answer.setQuestion(questionRepository.findById(answer.getQuestionId()).get());
 		answerRepository.save(answer);
         return "answer POST succesful. Maybe.";
     }  	    
     
+    
+	@RequestMapping(value="/saveanswers", method = { RequestMethod.POST })
+    public String answerSavePost(@RequestBody List<Answer> list) {
+		for (Answer answer : list) {
+			answer.setQuestion(questionRepository.findById(answer.getQuestionId()).get());
+			answerRepository.save(answer);
+		}
+        return "answer POST succesful. Maybe.";
+    }  	 
+	
     @RequestMapping(value = "/savequestion", method = RequestMethod.POST)
     public String save(Question question){
         questionRepository.save(question);
