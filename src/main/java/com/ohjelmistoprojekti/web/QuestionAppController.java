@@ -100,6 +100,7 @@ public class QuestionAppController {
 	
 	@RequestMapping(value = "/addquestion")
 	public String addquestion(Model model) {
+		model.addAttribute("categories", categoryRepository.findAll());
 		model.addAttribute("question", new Question());
 		return "addquestion";
 	}
@@ -123,5 +124,5 @@ public class QuestionAppController {
 		answerRepository.save(answer);
 		return "redirect:answers";
 	}
-
+	
 }

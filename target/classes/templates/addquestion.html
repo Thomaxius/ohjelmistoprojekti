@@ -17,7 +17,7 @@
 			<br>
 
 			<label for="categlist">Categories</label>
-			<select id="categlist" th:field="*{category}" class="form-control">
+			<select id="categlist" th:field="*{Category}" class="form-control">
        			<option th:each="category: ${categories}" th:value="${category.categoryId}" th:text="${category.categoryName}"></option>
     		</select>
     		<br>
