@@ -7,7 +7,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
+
 
 
 @Entity
@@ -15,22 +18,55 @@ public class Answer {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long answerId;
-	private String answerText;
+    private Long questionId;
 	
-    @ManyToOne
-    @JsonIgnore
-    @JoinColumn(name = "questionid")
-	private Question question;
-	
-    public Answer() {}
 
-	public Answer(String answerText, Question question) {
-		super();
-		this.answerText = answerText;
+	public Question getQuestion() {
+		return question;
+	}
+
+	public void setQuestion(Question question) {
 		this.question = question;
 	}
 
+	public String getAnswer() {
+		return answer;
+	}
+
+	public Long getQuestionId() {
+		return questionId;
+	}
+
+	public void setQuestionId(Long questionId) {
+		this.questionId = questionId;
+	}
+
+	public void setAnswer(String answer) {
+		this.answer = answer;
+	}
+
+	@ManyToOne
+    @JoinColumn(name = "question")
+	@JsonBackReference
+
+	private Question question;
+
+    private String answer;
     
+    public Answer() {}
+
+	public Answer(String answer, Question question) {
+		super();
+		this.answer = answer;
+		this.question = question;
+	}
+
+	public Answer(String answer, Long questionId) {
+		super();
+		this.answer = answer;
+		this.questionId = questionId;
+	}	
+	
 	public Long getAnswerId() {
 		return answerId;
 	}
@@ -39,19 +75,6 @@ public class Answer {
 		this.answerId = answerId;
 	}
 
-	public String getAnswerText() {
-		return answerText;
-	}
-
-	public void setAnswerText(String answerText) {
-		this.answerText = answerText;
-	}
-
-	public Answer(Long answerId, String answerText) {
-		super();
-		this.answerId = answerId;
-		this.answerText = answerText;
-	}
 	
 	
 }
