@@ -44,7 +44,6 @@ public class Question {
 	
     @ManyToOne
     @JoinColumn(name = "categoryid")
-    
     @JsonBackReference
 	private Category category;	
 
@@ -53,14 +52,13 @@ public class Question {
 		return answers;
 	}
 
-    @JsonView(Views.Internal.class)
 	public void setAnswers(List<Answer> answers) {
 		this.answers = answers;
 	}
-
+    
+    @JsonView(Views.Internal.class)
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "question")
     @JsonManagedReference
-    @JsonView(Views.Internal.class)
 	private List<Answer> answers;	
 	
 	public Question() {
