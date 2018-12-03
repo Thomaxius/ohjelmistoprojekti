@@ -23,7 +23,7 @@ public class Category {
 	
 	private String categoryName;
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "category")
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE, mappedBy = "category")
 	@JsonManagedReference
 	private List<Question> questions;
 	

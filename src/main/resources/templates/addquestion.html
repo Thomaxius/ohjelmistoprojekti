@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lisää kysymys</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>Lisää kysymys:</h1>
+	<div>
+		<form th:object="${question}" th:action="@{savequestion2}" action="#" method="post">
+		
+		  	<label for="qstn">Kysymys: </label>
+			<input type="text" id="qstn" th:field="*{questionName}" />
+			<br>
+		  	<label for="type">Tyyppi: </label>
+			<input type="text" id="type" th:field="*{questionType}" />
+			<br>
+
+			<label for="categlist">Categories</label>
+			<select id="categlist" th:field="*{Category}" class="form-control">
+       			<option th:each="category: ${categories}" th:value="${category.categoryName}" th:text="${category.categoryName}"></option>
+    		</select>
+    		<br>
+			<input type="submit" value="Tallenna"></input>
+		</form>
+	</div>
+</body>
+</html>
