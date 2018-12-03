@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit workday</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet" />
+</head>
+
+<body>
+    	<div class="header-wrapper">
+				<div class="header">
+				  <ul class="navigation">
+					<li><a href="/workdaylist">Etusivu</a></li>
+				  <li class="dropdown">
+						<a href="javascript:void(0)" class="dropbtn">Lisää..</a>
+						<div class="dropdown-content">
+								<a href="/addworkday">Lisää työpäivä</a>
+								<p sec:authorize="hasAuthority('ADMIN')"><a href="/addvehicle" class="btn btn-success">Lisää auto</a> </p>
+						</div>
+					</li>
+					<li sec:authorize="hasAuthority('ADMIN')"class="dropdown">
+					<a sec:authorize="hasAuthority('ADMIN')" href="javascript:void(0)" class="dropbtn">Hallinnoi..</a>
+					<div class="dropdown-content">
+					<a sec:authorize="hasAuthority('ADMIN')" href="/vehiclelist">Hallinnoi autoja</a>
+							</div>
+						</li>	
+				  </ul>
+  					  <ul class="logout">
+					    <form sec:authorize="isAnonymous()" th:action="@{/login}" method="post"><input class="logout" type="submit" value="Kirjaudu sisään"/></form>
+					    <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post"><input class="logout" type="submit" value="Kirjaudu ulos"/></form>
+					  </ul>
+				</div>
+			  </div>
+		<div class="content-wrapper">
+				<div class="content">
+				<p class="center-title">Muokkaa työpäivää</p>
+				<br/>
+		<form th:object="${workdayform}" th:action="@{/addworkday}" action="#" method="post">
+			<input type="hidden" th:field="*{id}"/></br>
+		  	<label for="beginDate">Työpäivän aloitus</label>
+			<input type="datetime-local" id="beginDate" th:field="*{beginDate}" />
+			<div style="clear: both; display: block; height: 10px;"></div>
+		  	<font color="red"><p th:if="${#fields.hasErrors('beginDate')}" th:errors="*{beginDate}"></p></font>					
+		  	<label for="endDate">Työpäivän lopetus</label>	
+			<input type="datetime-local" id="endDate" th:field="*{endDate}" />
+		  	<font color="red"><p th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}"></p></font>			
+			<div style="clear: both; display: block; height: 10px;"></div>
+		  	<label for="paulig">Paulig</label>
+			<input type="number" id="paulig_amount" th:field="*{pauligAmount}" />					
+			<div style="clear: both; display: block; height: 10px;"></div>
+		  	<label for="fazer">Fazer</label>
+			<input type="number" id="fazer_amount" th:field="*{fazerAmount}" />					
+			<div style="clear: both; display: block; height: 10px;"></div>
+		  	<label for="merca">Merca</label>
+			<input type="number" id="merca_amount" th:field="*{mercaAmount}" />					
+			<div style="clear: both; display: block; height: 10px;"></div>
+		  	<label for="pahvit">Pahvit</label>
+			<input type="number" id="pahvit_amount" th:field="*{pahvitAmount}" />					
+			<div style="clear: both; display: block; height: 10px;"></div>
+		  	<label for="akaa">Akaa</label>
+			<input type="number" id="akaa_amount" th:field="*{akaaAmount}" />					
+			<div style="clear: both; display: block; height: 10px;"></div>
+		  	<label for="kesko">Kesko</label>
+			<input type="number" id="kesko_amount" th:field="*{keskoAmount}" />					
+			<div style="clear: both; display: block; height: 10px;"></div>
+		  	<label for="other">Muut kuormat</label>
+			<input type="number" id="other_amount" th:field="*{otherAmount}" />
+			<div style="clear: both; display: block; height: 10px;"></div>
+		  	<label for="other_info">Muut kuormat selite</label>
+			<input type="text" id="other_info" th:field="*{otherInfo}" />
+			<div style="clear: both; display: block; height: 10px;"></div>
+			<label for="vehicleList">Auto</label>
+			 <select id="vehicleList" th:field="*{vehicle}" class="form-control">
+       			<option selected="selected" th:each="vehicle: ${vehicles}" th:value="${vehicle.vehicleid}" th:text="${vehicle.regNo}"></option>
+    		</select>					
+			<div style="clear: both; display: block; height: 10px;"></div>
+			<input type="submit" value="Save"></input>
+		</form>
+	</div>
+	</div>
+</body>
+</html>

@@ -63,6 +63,8 @@ public class QuestionApplication {
             questionRepository.save(new Question("Kerro lyhyesti oma mielipiteesi mitä parannettavaa koulun työvälineiden ja ohjelmien tarjonnassa olisi?", "text", categoryrepository.findByCategoryName("kategoria4").get(0)));
             
             //answerRepository.save(new Answer("kek", questionRepository.findByQuestionName("Mitä laitetta käytät pääasiassa koulutehtävien tekemiseen?").get(0)));
+            
+            answerRepository.save(new Answer("Kek", questionRepository.findByQuestionName("Mitä laitetta käytät pääasiassa koulutehtävien tekemiseen?").get(0)));
             }
                                
             log.info("Show questions");

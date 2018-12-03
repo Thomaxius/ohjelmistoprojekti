@@ -2,6 +2,7 @@ package com.ohjelmistoprojekti.web;
 
 
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,12 +19,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ohjelmistoprojekti.domain.Answer;
 import com.ohjelmistoprojekti.domain.AnswerRepository;
 import com.ohjelmistoprojekti.domain.Category;
 import com.ohjelmistoprojekti.domain.CategoryRepository;
 import com.ohjelmistoprojekti.domain.Question;
 import com.ohjelmistoprojekti.domain.QuestionRepository;
+import com.ohjelmistoprojekti.domain.Views;
 
 
 @Controller
@@ -41,13 +46,23 @@ public class QuestionAppController {
 
 	@RequestMapping(value="/categories", method = RequestMethod.GET)
 	@CrossOrigin
-    public @ResponseBody List<Category> categoriesListRest() {	
-        return (List<Category>) categoryRepository.findAll();
+    public @ResponseBody List<Category> categoriesListRest() throws IOException {
+	    ObjectMapper mapper = new ObjectMapper();
+	    String result = mapper
+	      .writerWithView(Views.Public.class)
+	      .writeValueAsString((List<Category>) categoryRepository.findAll());
+	    List<Category> JsonList = mapper.readValue(result, new TypeReference<List<Category>>(){});
+        return JsonList;
     }   	
 	
 	@RequestMapping(path = "/questions")
-    public @ResponseBody List<Question> questionListRest() {	
-        return (List<Question>) questionRepository.findAll();
+    public @ResponseBody List<Question> questionListRest() throws IOException {	
+	    ObjectMapper mapper = new ObjectMapper();
+	    String result = mapper
+	      .writerWithView(Views.Public.class)
+	      .writeValueAsString((List<Question>) questionRepository.findAll());
+	    List<Question> JsonList = mapper.readValue(result, new TypeReference<List<Question>>(){});
+        return JsonList;
     }    
 	
 	// RESTful service to find question by id
@@ -59,8 +74,13 @@ public class QuestionAppController {
 	
 	@RequestMapping(value="/answers", method = RequestMethod.GET)
 	@CrossOrigin
-    public @ResponseBody List<Answer> answerListRest() {	
-        return (List<Answer>) answerRepository.findAll();
+    public @ResponseBody List<Answer> answerListRest() throws IOException {
+	    ObjectMapper mapper = new ObjectMapper();
+	    String result = mapper
+	      .writerWithView(Views.Public.class)
+	      .writeValueAsString((List<Answer>) answerRepository.findAll());
+	    List<Answer> JsonList = mapper.readValue(result, new TypeReference<List<Answer>>(){});
+        return JsonList;
     }    
 
 	// RESTful service to find answer by id

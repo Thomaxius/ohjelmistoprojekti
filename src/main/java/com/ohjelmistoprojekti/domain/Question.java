@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonView;
 
 
 @Entity
@@ -47,16 +48,19 @@ public class Question {
     @JsonBackReference
 	private Category category;	
 
+    @JsonView(Views.Internal.class)
     public List<Answer> getAnswers() {
 		return answers;
 	}
 
+    @JsonView(Views.Internal.class)
 	public void setAnswers(List<Answer> answers) {
 		this.answers = answers;
 	}
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "question")
     @JsonManagedReference
+    @JsonView(Views.Internal.class)
 	private List<Answer> answers;	
 	
 	public Question() {

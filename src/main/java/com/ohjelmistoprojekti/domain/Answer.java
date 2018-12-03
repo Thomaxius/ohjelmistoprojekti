@@ -9,6 +9,7 @@ import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 
 
 
@@ -17,7 +18,6 @@ public class Answer {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long answerId;
-    
     private Long questionId;
 	
 
@@ -48,8 +48,9 @@ public class Answer {
 	@ManyToOne
     @JoinColumn(name = "question")
 	@JsonBackReference
+
 	private Question question;
-    
+
     private String answer;
     
     public Answer() {}
