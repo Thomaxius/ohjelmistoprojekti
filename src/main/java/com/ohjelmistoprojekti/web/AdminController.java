@@ -1,23 +1,16 @@
 package com.ohjelmistoprojekti.web;
 
-import java.util.List;
-import java.util.Optional;
-
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ohjelmistoprojekti.domain.Answer;
 import com.ohjelmistoprojekti.domain.AnswerRepository;
-import com.ohjelmistoprojekti.domain.Category;
 import com.ohjelmistoprojekti.domain.CategoryRepository;
 import com.ohjelmistoprojekti.domain.Question;
 import com.ohjelmistoprojekti.domain.QuestionRepository;
@@ -75,9 +68,6 @@ public class AdminController {
     } 	
 	@RequestMapping(value = "/editquestion/{id}")
 	public String editquestion(@PathVariable("id") Long questionId, Model model) {
-		for (Category category : categoryRepository.findAll()) {
-			System.out.println(category.getCategoryId());
-		}
 		model.addAttribute("categories", categoryRepository.findAll());
 		model.addAttribute("question", questionRepository.findById(questionId));
 		return "editquestion";

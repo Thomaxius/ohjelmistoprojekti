@@ -64,7 +64,6 @@ public class QuestionApplication {
 			User user2 = new User("admin", "$2a$10$0MMwY.IQqpsVc1jC8u7IJ.2rT8b0Cd3b3sfIBGV2zfgnPGtT4r0.C", "ADMIN");
 			userRepository.save(user1);
 			userRepository.save(user2); 
-            //answerRepository.save(new Answer("Kannettava tietokone", questionRepository.findByQuestionName("Mitä laitetta käytät pääasiassa koulutehtävien tekemiseen?").get(0)));
             }
                                
             log.info("Show questions");

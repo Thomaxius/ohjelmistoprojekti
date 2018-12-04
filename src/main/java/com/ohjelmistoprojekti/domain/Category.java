@@ -23,6 +23,12 @@ public class Category {
 	
 	private String categoryName;
 	
+	@Override
+	public String toString() {
+		return "Category [categoryId=" + categoryId + ", categoryName=" + categoryName + ", questions=" + questions
+				+ "]";
+	}
+
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE, mappedBy = "category")
 	@JsonManagedReference
 	private List<Question> questions;

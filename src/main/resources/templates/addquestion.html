@@ -15,7 +15,9 @@
 		  	<label for="type">Tyyppi: </label>
 			<input type="text" id="type" th:field="*{questionType}" />
 			<br>
-
+		  	<label for="type">Vastausvaihtoehdot (erottele pilkulla): </label>
+			<input type="text" id="type" th:field="*{values}" />
+			<br>
 			<label for="categlist">Categories</label>
 			<select id="categlist" th:field="*{Category}" class="form-control">
        			<option th:each="category: ${categories}" th:value="${category.categoryName}" th:text="${category.categoryName}"></option>

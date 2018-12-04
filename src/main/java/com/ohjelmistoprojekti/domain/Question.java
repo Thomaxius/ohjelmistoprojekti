@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,6 +14,7 @@ import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -36,7 +38,6 @@ public class Question {
 	
 	public Question(String questionName, String questionType, Category category, String[] values) {
 		super();
-		System.out.println("HEre1");
 		this.questionName = questionName;
 		this.questionType = questionType;
 		this.category = category;
@@ -65,8 +66,9 @@ public class Question {
 	}
     
     @JsonView(Views.Internal.class)
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "question")
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "question")
     @JsonManagedReference
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
 	private List<Answer> answers;	
 	    
 	public Question() {

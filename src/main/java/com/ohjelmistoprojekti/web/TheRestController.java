@@ -8,7 +8,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -57,10 +56,10 @@ public class TheRestController {
 	    ObjectMapper mapper = new ObjectMapper();
 	    String result = mapper
 	      .writerWithView(Views.Public.class)
-	      .writeValueAsString((List<Question>) questionRepository.findAll());
+	      .writeValueAsString((List<Question>) questionRepository.findAll());  
 	    List<Question> JsonList = mapper.readValue(result, new TypeReference<List<Question>>(){});
         return JsonList;
-    }    
+    }     
 	
 	// RESTful service to find question by id
     @RequestMapping(value="/question/{id}", method = RequestMethod.GET)
@@ -85,11 +84,6 @@ public class TheRestController {
     public @ResponseBody Optional<Answer> findAnswerRest(@PathVariable("id") Long id) {	
     	return answerRepository.findById(id);
     }      
- // @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
- // public String deletequestion(@PathVariable("id") Long questionId, Model model) {
- // 	questionRepository.deleteById(questionId);
- //     return "redirect:../questionlist";
- // }    
     
 	@RequestMapping(value="/savesingleanswer", method = { RequestMethod.POST })
     public String answerSavePost(@RequestBody Answer answer) {
