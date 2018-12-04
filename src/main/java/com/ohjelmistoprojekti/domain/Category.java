@@ -10,11 +10,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 
 
-
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, 
+property  = "categoryId", 
+scope     = Long.class)
 @Entity
 public class Category {
 	@Id
@@ -22,15 +25,8 @@ public class Category {
 	private Long categoryId;
 	
 	private String categoryName;
-	
-	@Override
-	public String toString() {
-		return "Category [categoryId=" + categoryId + ", categoryName=" + categoryName + ", questions=" + questions
-				+ "]";
-	}
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE, mappedBy = "category")
-	@JsonManagedReference
 	private List<Question> questions;
 	
 	public Category() {}

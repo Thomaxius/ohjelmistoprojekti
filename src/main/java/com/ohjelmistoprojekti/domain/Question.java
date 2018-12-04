@@ -12,13 +12,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, 
+property  = "questionId", 
+scope     = Long.class)
 @Entity
 public class Question {
 	
@@ -53,7 +56,8 @@ public class Question {
 	
     @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "categoryid")
-    @JsonBackReference
+    @JsonView(Views.Internal.class)
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
 	private Category category;	
 
     @JsonView(Views.Internal.class)
@@ -68,7 +72,7 @@ public class Question {
     @JsonView(Views.Internal.class)
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "question")
     @JsonManagedReference
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    @JsonInclude(JsonInclude.Include.NON_NULL)
 	private List<Answer> answers;	
 	    
 	public Question() {
@@ -85,6 +89,7 @@ public class Question {
 		this.questionName = questionname;
 	}
 	
+    @JsonView(Views.Internal.class)
 	public Category getCategory() {
 		return category;
 	}
