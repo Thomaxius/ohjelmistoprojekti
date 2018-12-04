@@ -30,6 +30,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.csrf().disable()
 		.authorizeRequests().antMatchers(HttpMethod.POST, "/saveanswers", "/savequestions").permitAll() // ENable css when logged out
 		.and()
+		.authorizeRequests().antMatchers("/questions", "/answers", "/categories").permitAll() // ENable css when logged out
+		.and()		
 		.authorizeRequests().antMatchers("/delete", "/delete/**", "/modify").hasAuthority("ADMIN")
 		.and()
 		.authorizeRequests().anyRequest().authenticated()
