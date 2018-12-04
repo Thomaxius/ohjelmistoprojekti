@@ -61,6 +61,15 @@ public class TheRestController {
         return JsonList;
     }     
 	
+	@RequestMapping(path = "/fullapi")
+    public @ResponseBody List<Category> fullApi() throws IOException {	
+	    ObjectMapper mapper = new ObjectMapper();
+	    String result = mapper
+	      .writerWithView(Views.Internal.class)
+	      .writeValueAsString((List<Category>) categoryRepository.findAll());
+	    List<Category> JsonList = mapper.readValue(result, new TypeReference<List<Category>>(){});
+        return JsonList;
+    }   	
 	// RESTful service to find question by id
     @RequestMapping(value="/question/{id}", method = RequestMethod.GET)
     public @ResponseBody Optional<Question> findStudentRest(@PathVariable("id") Long id) {	
@@ -89,7 +98,7 @@ public class TheRestController {
     public String answerSavePost(@RequestBody Answer answer) {
 		answer.setQuestion(questionRepository.findById(answer.getQuestionId()).get());
 		answerRepository.save(answer);
-        return "answer POST succesful. Maybe.";
+        return "Single answer POST succesful. Maybe.";
     }  	    
     
     
@@ -99,7 +108,7 @@ public class TheRestController {
 			answer.setQuestion(questionRepository.findById(answer.getQuestionId()).get());
 			answerRepository.save(answer);
 		}
-        return "answer POST succesful. Maybe.";
+        return "Answer list POST succesful. Maybe.";
     }  	 
 	
     @RequestMapping(value = "/savequestion", method = RequestMethod.POST)
