@@ -8,7 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonView;
 
 
@@ -17,6 +17,8 @@ import com.fasterxml.jackson.annotation.JsonView;
 public class Answer {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
+    @JsonView(Views.Internal.class)
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private Long answerId;
     private Long questionId;
 	
@@ -67,6 +69,7 @@ public class Answer {
 		this.questionId = questionId;
 	}	
 	
+    @JsonView(Views.Internal.class)
 	public Long getAnswerId() {
 		return answerId;
 	}

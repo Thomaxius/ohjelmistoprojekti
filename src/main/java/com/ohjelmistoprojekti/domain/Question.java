@@ -13,13 +13,21 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonView;
 
 
 @Entity
 public class Question {
+	
+	@JsonIgnore
+	private static AnswerRepository answerRepository; 
 
+	@JsonIgnore
+	private static CategoryRepository categoryRepository; 	
+	
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long questionId;
@@ -27,6 +35,7 @@ public class Question {
 	private String questionType; //text, radio, checkbox..
 	private String[] values;
 
+	
 	public Question(String questionName, String questionType, Category category, String[] values) {
 		super();
 		this.questionName = questionName;
@@ -42,7 +51,7 @@ public class Question {
 		this.category = category;
 	}	
 	
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "categoryid")
     @JsonBackReference
 	private Category category;	
@@ -59,8 +68,9 @@ public class Question {
     @JsonView(Views.Internal.class)
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "question")
     @JsonManagedReference
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
 	private List<Answer> answers;	
-	
+	    
 	public Question() {
 		super();
 	}
