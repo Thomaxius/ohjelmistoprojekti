@@ -59,14 +59,16 @@ public class QuestionApplication {
             questionRepository.save(new Question("Jos vastasit yllä olevaan kysymykseen, mitä ominaisuutta nämä ongelmat yleensä koskevat?", "text", categoryRepository.findByCategoryName("kategoria4").get(0), new String[] {"Responsiivisuutta", "Tiedon katoamista", "Linkkien supistamista/kadottamista", "Asemointia", "Jotain muuta"}));           
             
             questionRepository.save(new Question("Kerro lyhyesti oma mielipiteesi mitä parannettavaa koulun työvälineiden ja ohjelmien tarjonnassa olisi?", "textarea", categoryRepository.findByCategoryName("kategoria5").get(0)));
-            
-            System.out.println("Saving users");
-			User user1 = new User("user", "$2a$06$3jYRJrg0ghaaypjZ/.g4SethoeA51ph3UD4kZi9oPkeMTpjKU5uo6", "USER");
-			User user2 = new User("admin", "$2a$10$0MMwY.IQqpsVc1jC8u7IJ.2rT8b0Cd3b3sfIBGV2zfgnPGtT4r0.C", "ADMIN");
-			userRepository.save(user1);
-			userRepository.save(user2); 
+
             }
-                               
+            
+            log.info("Saving users");
+	            if (userRepository.findByUsername("admin") == null) {
+				User user1 = new User("user", "$2a$06$3jYRJrg0ghaaypjZ/.g4SethoeA51ph3UD4kZi9oPkeMTpjKU5uo6", "USER");
+				User user2 = new User("admin", "$2a$10$0MMwY.IQqpsVc1jC8u7IJ.2rT8b0Cd3b3sfIBGV2zfgnPGtT4r0.C", "ADMIN");
+				userRepository.save(user1);
+				userRepository.save(user2);
+            }
             log.info("Show questions");
             for (Question question : questionRepository.findAll()) {
                 log.info(question.toString());
