@@ -73,7 +73,7 @@ public class QuestionApplication {
             for (Question question : questionRepository.findAll()) {
                 log.info(question.toString());
             }
-            }
+            
         };
     }
 }
