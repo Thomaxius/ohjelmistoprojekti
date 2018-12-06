@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="\"User\"")
+@Table(name="\"User\"") //User on varattu termi Postgresissä, joten tämä fiksaa sen
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
