@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ohjelmistoprojekti.QuestionApplication;
 import com.ohjelmistoprojekti.domain.Answer;
 import com.ohjelmistoprojekti.domain.AnswerRepository;
 import com.ohjelmistoprojekti.domain.Category;
@@ -32,7 +35,7 @@ import com.ohjelmistoprojekti.domain.Views;
 @Controller
 @RestController
 public class TheRestController {
- 
+	private static final Logger log = LoggerFactory.getLogger(TheRestController.class);
 	@Autowired
 	private QuestionRepository questionRepository; 
 

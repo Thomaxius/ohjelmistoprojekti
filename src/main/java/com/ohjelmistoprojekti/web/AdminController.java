@@ -2,6 +2,8 @@ package com.ohjelmistoprojekti.web;
 
 import javax.transaction.Transactional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -18,7 +20,7 @@ import com.ohjelmistoprojekti.domain.QuestionRepository;
 
 @Controller
 public class AdminController {
-
+	private static final Logger log = LoggerFactory.getLogger(AdminController.class);
 	@Autowired
 	private QuestionRepository questionRepository;
 
@@ -84,8 +86,8 @@ public class AdminController {
 	
 	@RequestMapping(value = "/savequestion2", method = RequestMethod.POST)
 	public String save2(Question question) {
-		System.out.println(question.getCategory().getCategoryName());
-		System.out.println(question.getCategory().getCategoryId());		
+		log.info(question.getCategory().getCategoryName());
+		log.info(question.getCategory().getCategoryId().toString());		
 		question.setCategory(categoryRepository.findByCategoryName(question.getCategory().getCategoryName()).get(0));
 		questionRepository.save(question);
 		return "redirect:questionlist";
