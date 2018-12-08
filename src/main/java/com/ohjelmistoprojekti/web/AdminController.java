@@ -20,7 +20,6 @@ import com.ohjelmistoprojekti.domain.QuestionRepository;
 
 @Controller
 public class AdminController {
-	private static final Logger log = LoggerFactory.getLogger(AdminController.class);
 	@Autowired
 	private QuestionRepository questionRepository;
 

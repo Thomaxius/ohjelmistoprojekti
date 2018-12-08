@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ohjelmistoprojekti.QuestionApplication;
 import com.ohjelmistoprojekti.domain.Answer;
 import com.ohjelmistoprojekti.domain.AnswerRepository;
 import com.ohjelmistoprojekti.domain.Category;
@@ -111,7 +110,7 @@ public class TheRestController {
 			return ResponseEntity.status(HttpStatus.CREATED).build();
 		}
     	catch(Exception ex) {
-        	System.out.println("There was an error saving a single answer: " + ex);
+        	log.info("There was an error saving a single answer: " + ex);
         	if (ex.getMessage().contains("No value present")) {
     			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: no value present. A questionId you are refering to does not exist.");        		
         	}
@@ -129,7 +128,7 @@ public class TheRestController {
 			}
 			return ResponseEntity.status(HttpStatus.CREATED).build();
         }	catch(Exception ex) {
-        	System.out.println("There was an error saving answers: " + ex.getMessage());
+        	log.info("There was an error saving answers: " + ex.getMessage());
         	if (ex.getMessage().contains("No value present")) {
     			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: no value present. A questionId you are refering to does not exist.");        		
         	}
@@ -145,7 +144,7 @@ public class TheRestController {
 			return ResponseEntity.status(HttpStatus.CREATED).build();
 		}
     	catch(Exception ex) {
-    		System.out.println("There was an error saving a question: " + ex);
+    		log.info("There was an error saving a question: " + ex);
     		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
     	}
     }    
@@ -158,7 +157,7 @@ public class TheRestController {
 			return ResponseEntity.status(HttpStatus.CREATED).build();
 	    }
     	catch(Exception ex) {
-    		System.out.println("There was an error saving a category: " + ex);
+    		log.info("There was an error saving a category: " + ex);
     		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
     	}
         
