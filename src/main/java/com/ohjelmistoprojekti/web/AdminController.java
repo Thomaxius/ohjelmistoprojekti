@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.ohjelmistoprojekti.domain.AnswerRepository;
 import com.ohjelmistoprojekti.domain.CategoryRepository;
 import com.ohjelmistoprojekti.domain.Question;
@@ -27,19 +28,13 @@ public class AdminController {
 	@Autowired
 	private CategoryRepository categoryRepository; 
 
-	@RequestMapping(value = "/index", method = RequestMethod.GET)
-	public String indeksi() {
-		return "index";
-	}
-
 	// Login
 	@RequestMapping(value = "/login")
 	public String login() {
 		return "login";
 	}
-
 	
-	@RequestMapping(value = "/admin")
+	@RequestMapping(value = {"/admin", "/"})
 	public String admin() {
 		return "admin";
 	}
@@ -50,7 +45,13 @@ public class AdminController {
 		model.addAttribute("questions", questionRepository.findAll());
 		return "questionlist";
 	}
+
 	
+	@RequestMapping(value = "/answerlist")
+	public String answerList(Model model) throws JsonProcessingException {
+    	model.addAttribute("answers", answerRepository.findAll());
+		return "answerlist";
+	}	
 	
 	@Transactional
     @RequestMapping(value = "/deletequestion/{id}", method = RequestMethod.GET)
@@ -64,8 +65,9 @@ public class AdminController {
     @RequestMapping(value = "/deleteanswer/{id}", method = RequestMethod.GET)
     public String deleteAnswer(@PathVariable("id") Long answerId, Model model) {
     	answerRepository.deleteById(answerId);
-        return "redirect:../questionlist";
-    } 	
+        return "redirect:../answerlist";
+    }
+    
 	@RequestMapping(value = "/editquestion/{id}")
 	public String editquestion(@PathVariable("id") Long questionId, Model model) {
 		model.addAttribute("categories", categoryRepository.findAll());

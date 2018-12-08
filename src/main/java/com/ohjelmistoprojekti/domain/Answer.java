@@ -1,5 +1,6 @@
 package com.ohjelmistoprojekti.domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,12 +9,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, 
+property  = "answerId", 
+scope     = Long.class)
 public class Answer {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -47,7 +53,7 @@ public class Answer {
 		this.answer = answer;
 	}
 
-	@ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "question")
 	@JsonBackReference
 

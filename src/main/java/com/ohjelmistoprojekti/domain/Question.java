@@ -70,7 +70,7 @@ public class Question {
 	}
     
     @JsonView(Views.Internal.class)
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "question")
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE, mappedBy = "question")
     @JsonManagedReference
     @JsonInclude(JsonInclude.Include.NON_NULL)
 	private List<Answer> answers;	

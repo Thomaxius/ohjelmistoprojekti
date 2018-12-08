@@ -5,7 +5,6 @@ package com.ohjelmistoprojekti.web;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -109,15 +108,17 @@ public class TheRestController {
 			return ResponseEntity.status(HttpStatus.CREATED).build();
 		}
     	catch(Exception ex) {
-    		System.out.println("There was an error saving an answer: " + ex);
-    		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-    	}
-    }  	    
-    
+        	System.out.println("There was an error saving a single answer: " + ex);
+        	if (ex.getMessage().contains("No value present")) {
+    			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: no value present. A questionId you are refering to does not exist.");        		
+        	}
+        	return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
+    	}  	    
+	}
     
 	@RequestMapping(value="/saveanswers", method = { RequestMethod.POST })
     @CrossOrigin
-    public ResponseEntity<String> answerSavePost(@RequestBody List<Answer> list) {
+    public ResponseEntity<Object> answerSavePost(@RequestBody List<Answer> list) {
 	    try {
 			for (Answer answer : list) {	
 				answer.setQuestion(questionRepository.findById(answer.getQuestionId()).get());
@@ -125,8 +126,11 @@ public class TheRestController {
 			}
 			return ResponseEntity.status(HttpStatus.CREATED).build();
         }	catch(Exception ex) {
-        	System.out.println("There was an error saving answers: " + ex);
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        	System.out.println("There was an error saving answers: " + ex.getMessage());
+        	if (ex.getMessage().contains("No value present")) {
+    			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: no value present. A questionId you are refering to does not exist.");        		
+        	}
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
 	    }	    
     }  	 
 	
@@ -139,7 +143,7 @@ public class TheRestController {
 		}
     	catch(Exception ex) {
     		System.out.println("There was an error saving a question: " + ex);
-    		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
     	}
     }    
     
@@ -152,7 +156,7 @@ public class TheRestController {
 	    }
     	catch(Exception ex) {
     		System.out.println("There was an error saving a category: " + ex);
-    		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
     	}
         
     }    
