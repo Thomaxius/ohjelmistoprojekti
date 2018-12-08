@@ -5,8 +5,11 @@ package com.ohjelmistoprojekti.web;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -99,35 +102,59 @@ public class TheRestController {
     
 	@RequestMapping(value="/savesingleanswer", method = { RequestMethod.POST })
     @CrossOrigin
-	public String answerSavePost(@RequestBody Answer answer) {
-		answer.setQuestion(questionRepository.findById(answer.getQuestionId()).get());
-		answerRepository.save(answer);
-        return "Single answer POST succesful. Maybe.";
+	public ResponseEntity<Object> answerSavePost(@RequestBody Answer answer) {
+	    try {
+			answer.setQuestion(questionRepository.findById(answer.getQuestionId()).get());
+			answerRepository.save(answer);
+			return ResponseEntity.status(HttpStatus.CREATED).build();
+		}
+    	catch(Exception ex) {
+    		System.out.println("There was an error saving an answer: " + ex);
+    		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    	}
     }  	    
     
     
 	@RequestMapping(value="/saveanswers", method = { RequestMethod.POST })
     @CrossOrigin
-    public String answerSavePost(@RequestBody List<Answer> list) {
-		for (Answer answer : list) {
-			answer.setQuestion(questionRepository.findById(answer.getQuestionId()).get());
-			answerRepository.save(answer);
-		}
-        return "Answer list POST succesful. Maybe.";
+    public ResponseEntity<String> answerSavePost(@RequestBody List<Answer> list) {
+	    try {
+			for (Answer answer : list) {	
+				answer.setQuestion(questionRepository.findById(answer.getQuestionId()).get());
+				answerRepository.save(answer);
+			}
+			return ResponseEntity.status(HttpStatus.CREATED).build();
+        }	catch(Exception ex) {
+        	System.out.println("There was an error saving answers: " + ex);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+	    }	    
     }  	 
 	
     @RequestMapping(value = "/savequestion", method = RequestMethod.POST)
     @CrossOrigin
-    public String save(Question question){
-        questionRepository.save(question);
-        return "Question POST succesful. Maybe.";
+    public ResponseEntity<Object> save(Question question){
+	    try {
+	    	questionRepository.save(question);
+			return ResponseEntity.status(HttpStatus.CREATED).build();
+		}
+    	catch(Exception ex) {
+    		System.out.println("There was an error saving a question: " + ex);
+    		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    	}
     }    
     
     @RequestMapping(value = "/savecategory", method = RequestMethod.POST)
     @CrossOrigin
-    public String saveCategory(Category category){
-        categoryRepository.save(category);
-        return "Category POST succesful. Maybe.";
+    public ResponseEntity<Object> saveCategory(Category category){
+	    try {
+	    	categoryRepository.save(category);
+			return ResponseEntity.status(HttpStatus.CREATED).build();
+	    }
+    	catch(Exception ex) {
+    		System.out.println("There was an error saving a category: " + ex);
+    		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    	}
+        
     }    
 
 } 
