@@ -3,6 +3,7 @@ package com.ohjelmistoprojekti.web;
 
 
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -59,9 +60,11 @@ public class TheRestController {
     @CrossOrigin
     public @ResponseBody List<Question> questionListRest() throws IOException {	
 	    ObjectMapper mapper = new ObjectMapper();
+	    List<Question> questions = (List<Question>) questionRepository.findAll();
+	    questions.sort(Comparator.comparingLong(Question::getQuestionId));
 	    String result = mapper
 	      .writerWithView(Views.Public.class)
-	      .writeValueAsString((List<Question>) questionRepository.findAll());  
+	      .writeValueAsString(questions);  
 	    List<Question> JsonList = mapper.readValue(result, new TypeReference<List<Question>>(){});
         return JsonList;
     }     
@@ -88,9 +91,11 @@ public class TheRestController {
 	@CrossOrigin
     public @ResponseBody List<Answer> answerListRest() throws IOException {
 	    ObjectMapper mapper = new ObjectMapper();
+	    List<Answer> answers = (List<Answer>) answerRepository.findAll();
+	    answers.sort(Comparator.comparingLong(Answer::getAnswerId));
 	    String result = mapper
 	      .writerWithView(Views.Public.class)
-	      .writeValueAsString((List<Answer>) answerRepository.findAll());
+	      .writeValueAsString(answers);
 	    List<Answer> JsonList = mapper.readValue(result, new TypeReference<List<Answer>>(){});
         return JsonList;
     }    
