@@ -84,6 +84,8 @@ public class AdminController {
 	
 	@RequestMapping(value = "/savequestion2", method = RequestMethod.POST)
 	public String save2(Question question) {
+		System.out.println(question.getCategory().getCategoryName());
+		System.out.println(question.getCategory().getCategoryId());		
 		question.setCategory(categoryRepository.findByCategoryName(question.getCategory().getCategoryName()).get(0));
 		questionRepository.save(question);
 		return "redirect:questionlist";
