@@ -52,6 +52,7 @@ public class TheRestController {
     }   	
 	
 	@RequestMapping(path = "/questions")
+    @CrossOrigin
     public @ResponseBody List<Question> questionListRest() throws IOException {	
 	    ObjectMapper mapper = new ObjectMapper();
 	    String result = mapper
@@ -62,6 +63,7 @@ public class TheRestController {
     }     
 	
 	@RequestMapping(path = "/fullapi")
+    @CrossOrigin
     public @ResponseBody List<Category> fullApi() throws IOException {	
 	    ObjectMapper mapper = new ObjectMapper();
 	    String result = mapper
@@ -72,6 +74,7 @@ public class TheRestController {
     }   	
 	// RESTful service to find question by id
     @RequestMapping(value="/question/{id}", method = RequestMethod.GET)
+    @CrossOrigin
     public @ResponseBody Optional<Question> findStudentRest(@PathVariable("id") Long id) {	
     	return questionRepository.findById(id);
     }      
@@ -95,7 +98,8 @@ public class TheRestController {
     }      
     
 	@RequestMapping(value="/savesingleanswer", method = { RequestMethod.POST })
-    public String answerSavePost(@RequestBody Answer answer) {
+    @CrossOrigin
+	public String answerSavePost(@RequestBody Answer answer) {
 		answer.setQuestion(questionRepository.findById(answer.getQuestionId()).get());
 		answerRepository.save(answer);
         return "Single answer POST succesful. Maybe.";
@@ -103,6 +107,7 @@ public class TheRestController {
     
     
 	@RequestMapping(value="/saveanswers", method = { RequestMethod.POST })
+    @CrossOrigin
     public String answerSavePost(@RequestBody List<Answer> list) {
 		for (Answer answer : list) {
 			answer.setQuestion(questionRepository.findById(answer.getQuestionId()).get());
@@ -112,12 +117,14 @@ public class TheRestController {
     }  	 
 	
     @RequestMapping(value = "/savequestion", method = RequestMethod.POST)
+    @CrossOrigin
     public String save(Question question){
         questionRepository.save(question);
         return "Question POST succesful. Maybe.";
     }    
     
     @RequestMapping(value = "/savecategory", method = RequestMethod.POST)
+    @CrossOrigin
     public String saveCategory(Category category){
         categoryRepository.save(category);
         return "Category POST succesful. Maybe.";
