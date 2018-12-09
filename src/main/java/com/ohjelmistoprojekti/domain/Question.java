@@ -56,7 +56,7 @@ public class Question {
 	
     @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "categoryid")
-    @JsonView(Views.Internal.class)
+    @JsonView(Views.Hidden.class)
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
 	private Category category;	
 
@@ -89,7 +89,7 @@ public class Question {
 		this.questionName = questionname;
 	}
 	
-    @JsonView(Views.Internal.class)
+    @JsonView(Views.Hidden.class)
 	public Category getCategory() {
 		return category;
 	}

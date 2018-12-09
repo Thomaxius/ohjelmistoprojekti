@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ohjelmistoprojekti.domain.Answer;
@@ -79,11 +80,16 @@ public class TheRestController {
 	    List<Category> JsonList = mapper.readValue(result, new TypeReference<List<Category>>(){});
         return JsonList;
     }   	
-	// RESTful service to find question by id
+	
+
     @RequestMapping(value="/question/{id}", method = RequestMethod.GET)
     @CrossOrigin
-    public @ResponseBody Optional<Question> findStudentRest(@PathVariable("id") Long id) {	
-    	return questionRepository.findById(id);
+    public @ResponseBody String findStudentRest(@PathVariable("id") Long id) throws JsonProcessingException {
+	    ObjectMapper mapper = new ObjectMapper();
+	    String result = mapper
+	  	      .writerWithView(Views.Internal.class)
+	  	      .writeValueAsString(questionRepository.findById(id).get());
+    	return result;
     }      
 
 	
