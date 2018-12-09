@@ -84,14 +84,24 @@ public class TheRestController {
 
     @RequestMapping(value="/question/{id}", method = RequestMethod.GET)
     @CrossOrigin
-    public @ResponseBody String findStudentRest(@PathVariable("id") Long id) throws JsonProcessingException {
+    public @ResponseBody String findQuestion(@PathVariable("id") Long id) throws JsonProcessingException {
 	    ObjectMapper mapper = new ObjectMapper();
 	    String result = mapper
 	  	      .writerWithView(Views.Internal.class)
 	  	      .writeValueAsString(questionRepository.findById(id).get());
     	return result;
     }      
+	
 
+    @RequestMapping(value="/category/{id}", method = RequestMethod.GET)
+    @CrossOrigin
+    public @ResponseBody String findCategory(@PathVariable("id") Long id) throws JsonProcessingException {
+	    ObjectMapper mapper = new ObjectMapper();
+	    String result = mapper
+	  	      .writerWithView(Views.Public.class)
+	  	      .writeValueAsString(categoryRepository.findById(id).get());
+    	return result;
+    }   
 	
 	@RequestMapping(value="/answers", method = RequestMethod.GET)
 	@CrossOrigin
